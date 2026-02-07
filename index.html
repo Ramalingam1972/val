@@ -6,6 +6,10 @@
 <title>Happy Valentine’s Day 💖</title>
 
 <style>
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
@@ -14,6 +18,7 @@ body {
     color: #fff;
 }
 
+/* Pages */
 .page {
     display: none;
     height: 100vh;
@@ -29,75 +34,83 @@ body {
     align-items: center;
 }
 
+/* Text */
 h1 {
-    font-size: clamp(2rem, 5vw, 3rem);
-    margin-bottom: 20px;
+    font-size: clamp(1.8rem, 6vw, 3rem);
+    margin-bottom: 15px;
 }
 
 p {
-    font-size: clamp(1.2rem, 4vw, 1.5rem);
-    max-width: 90%;
+    font-size: clamp(1.1rem, 4.5vw, 1.4rem);
+    max-width: 95%;
+    line-height: 1.5;
 }
 
+/* Buttons */
 button {
-    padding: 15px 30px;
+    padding: 16px 36px;
     font-size: 18px;
     border: none;
-    border-radius: 30px;
+    border-radius: 999px;
     cursor: pointer;
     background: #ff4d6d;
     color: white;
-    margin: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    margin: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
 }
 
-button:hover {
-    background: #ff1e4d;
+button:active {
+    transform: scale(0.96);
 }
 
+/* Yes / Maybe area */
 .buttons {
     position: relative;
-    width: 300px;
-    height: 150px;
+    width: 100%;
+    max-width: 320px;
+    height: 180px;
 }
 
+/* Maybe button */
 #maybe {
     position: absolute;
-    right: 0;
+    right: 10px;
+    top: 70px;
 }
 
+/* Floating hearts */
 .heart {
     position: absolute;
-    font-size: 20px;
-    animation: float 6s infinite ease-in;
+    font-size: 18px;
+    animation: float 6s linear infinite;
     opacity: 0.7;
 }
 
 @keyframes float {
-    0% { transform: translateY(100vh); opacity: 1; }
-    100% { transform: translateY(-10vh); opacity: 0; }
+    from { transform: translateY(110vh); opacity: 1; }
+    to { transform: translateY(-10vh); opacity: 0; }
 }
 
+/* Confetti */
 .confetti {
     position: absolute;
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
     animation: fall 2s linear infinite;
 }
 
 @keyframes fall {
-    from { transform: translateY(0); }
     to { transform: translateY(100vh); }
 }
 
+/* Final message */
 .final-title {
     animation: glowFade 2s ease-in-out forwards;
-    text-shadow: 0 0 15px rgba(255,255,255,0.6);
+    text-shadow: 0 0 18px rgba(255,255,255,0.7);
 }
 
 .final-text {
     animation: glowFade 3s ease-in-out forwards;
-    font-size: clamp(1.1rem, 4vw, 1.4rem);
 }
 
 @keyframes glowFade {
@@ -109,8 +122,8 @@ button:hover {
 
 <body>
 
-<!-- 🎶 Background Music -->
-<audio autoplay loop>
+<!-- 🎶 Soft Background Music -->
+<audio autoplay loop playsinline>
   <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_2e0c5a0d78.mp3" type="audio/mpeg">
 </audio>
 
@@ -125,6 +138,7 @@ button:hover {
 <div class="page" id="page2">
     <h1>Jaya 💕</h1>
     <p>Will you be my Valentine?</p>
+
     <div class="buttons">
         <button onclick="yesClicked()">Yes 💖</button>
         <button id="maybe">Maybe Not 😜</button>
@@ -160,75 +174,74 @@ function yesClicked() {
     hugKissBurst();
 }
 
-// Floating hearts background
+/* Floating hearts (lighter for mobile) */
 setInterval(() => {
     const h = document.createElement("div");
     h.className = "heart";
     h.innerHTML = "❤️";
     h.style.left = Math.random() * 100 + "vw";
-    h.style.fontSize = Math.random() * 25 + 15 + "px";
-    h.style.animationDuration = Math.random() * 3 + 4 + "s";
+    h.style.fontSize = Math.random() * 20 + 14 + "px";
     document.body.appendChild(h);
-    setTimeout(() => h.remove(), 7000);
-}, 300);
+    setTimeout(() => h.remove(), 6000);
+}, 450);
 
-// Harder Maybe Not button 😈
+/* Make Maybe Not escape on TOUCH + MOUSE */
 const maybe = document.getElementById("maybe");
-maybe.addEventListener("mouseover", () => {
-    const x = Math.random() * 400 - 200;
-    const y = Math.random() * 250 - 125;
+function moveButton() {
+    const x = Math.random() * 240 - 120;
+    const y = Math.random() * 200 - 100;
     maybe.style.transform = `translate(${x}px, ${y}px)`;
-});
+}
+maybe.addEventListener("mouseover", moveButton);
+maybe.addEventListener("touchstart", moveButton);
 
-// Confetti
+/* Confetti */
 function launchConfetti() {
-    for (let i = 0; i < 60; i++) {
+    for (let i = 0; i < 40; i++) {
         const c = document.createElement("div");
         c.className = "confetti";
         c.style.left = Math.random() * 100 + "vw";
         c.style.background = `hsl(${Math.random()*360},100%,70%)`;
-        c.style.animationDuration = Math.random() * 2 + 1 + "s";
         document.body.appendChild(c);
         setTimeout(() => c.remove(), 2000);
     }
 }
 
-// Heart burst
+/* Heart burst */
 function heartBurst() {
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 20; i++) {
         const h = document.createElement("div");
         h.innerHTML = "❤️";
         h.style.position = "absolute";
         h.style.left = "50%";
         h.style.top = "50%";
-        h.style.fontSize = "24px";
         h.style.transform =
-            `translate(${Math.random()*300-150}px, ${Math.random()*300-150}px)`;
+            `translate(${Math.random()*240-120}px, ${Math.random()*240-120}px)`;
         document.body.appendChild(h);
         setTimeout(() => h.remove(), 1500);
     }
 }
 
-// Hug & Kiss burst 🤗 😘
+/* Hug & Kiss 🤗 😘 */
 function hugKissBurst() {
     const emojis = ["🤗", "😘"];
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < 18; i++) {
         const e = document.createElement("div");
-        e.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+        e.innerHTML = emojis[Math.floor(Math.random()*2)];
         e.style.position = "absolute";
         e.style.left = "50%";
         e.style.top = "55%";
-        e.style.fontSize = "28px";
-        e.style.transition = "all 1.5s ease-out";
+        e.style.fontSize = "26px";
+        e.style.transition = "all 1.4s ease-out";
         document.body.appendChild(e);
 
         setTimeout(() => {
             e.style.transform =
-                `translate(${Math.random()*300-150}px, ${Math.random()*300-150}px) scale(1.5)`;
+                `translate(${Math.random()*240-120}px, ${Math.random()*240-120}px) scale(1.4)`;
             e.style.opacity = "0";
         }, 50);
 
-        setTimeout(() => e.remove(), 1600);
+        setTimeout(() => e.remove(), 1500);
     }
 }
 </script>
