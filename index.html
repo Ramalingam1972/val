@@ -2,128 +2,235 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Happy Valentine's Day ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Valentine’s Day 💖</title>
+
 <style>
-    body {
-        margin: 0;
-        font-family: 'Segoe UI', sans-serif;
-        overflow: hidden;
-        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-    }
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    color: #fff;
+}
 
-    .page {
-        display: none;
-        height: 100vh;
-        width: 100vw;
-        text-align: center;
-        color: #fff;
-    }
+.page {
+    display: none;
+    height: 100vh;
+    width: 100vw;
+    text-align: center;
+    padding: 20px;
+}
 
-    .page.active {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
+.page.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
-    h1 {
-        font-size: 3em;
-        margin-bottom: 20px;
-    }
+h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 20px;
+}
 
-    button {
-        padding: 15px 30px;
-        font-size: 18px;
-        border: none;
-        border-radius: 30px;
-        cursor: pointer;
-        background: #ff4d6d;
-        color: white;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    }
+p {
+    font-size: clamp(1.2rem, 4vw, 1.5rem);
+    max-width: 90%;
+}
 
-    button:hover {
-        background: #ff1e4d;
-    }
+button {
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    background: #ff4d6d;
+    color: white;
+    margin: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
 
-    .heart {
-        position: absolute;
-        color: rgba(255,255,255,0.7);
-        font-size: 20px;
-        animation: float 6s infinite ease-in;
-    }
+button:hover {
+    background: #ff1e4d;
+}
 
-    @keyframes float {
-        0% {
-            transform: translateY(100vh) scale(1);
-            opacity: 1;
-        }
-        100% {
-            transform: translateY(-10vh) scale(1.5);
-            opacity: 0;
-        }
-    }
+.buttons {
+    position: relative;
+    width: 300px;
+    height: 150px;
+}
 
-    .buttons {
-        display: flex;
-        gap: 30px;
-        margin-top: 30px;
-        position: relative;
-    }
+#maybe {
+    position: absolute;
+    right: 0;
+}
 
-    #maybe {
-        position: absolute;
-    }
+.heart {
+    position: absolute;
+    font-size: 20px;
+    animation: float 6s infinite ease-in;
+    opacity: 0.7;
+}
+
+@keyframes float {
+    0% { transform: translateY(100vh); opacity: 1; }
+    100% { transform: translateY(-10vh); opacity: 0; }
+}
+
+.confetti {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    animation: fall 2s linear infinite;
+}
+
+@keyframes fall {
+    from { transform: translateY(0); }
+    to { transform: translateY(100vh); }
+}
+
+.final-title {
+    animation: glowFade 2s ease-in-out forwards;
+    text-shadow: 0 0 15px rgba(255,255,255,0.6);
+}
+
+.final-text {
+    animation: glowFade 3s ease-in-out forwards;
+    font-size: clamp(1.1rem, 4vw, 1.4rem);
+}
+
+@keyframes glowFade {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
 </style>
 </head>
 
 <body>
 
-<!-- Page 1 -->
+<!-- 🎶 Background Music -->
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_2e0c5a0d78.mp3" type="audio/mpeg">
+</audio>
+
+<!-- PAGE 1 -->
 <div class="page active" id="page1">
     <h1>💖 Happy Valentine’s Day 💖</h1>
+    <p>For someone very special 💌</p>
     <button onclick="nextPage()">Next ➜</button>
 </div>
 
-<!-- Page 2 -->
+<!-- PAGE 2 -->
 <div class="page" id="page2">
-    <h1>Will you be my Valentine? 💌</h1>
+    <h1>Jaya 💕</h1>
+    <p>Will you be my Valentine?</p>
     <div class="buttons">
-        <button onclick="alert('Yayyy! ❤️😍')">Yes</button>
-        <button id="maybe">Maybe Not</button>
+        <button onclick="yesClicked()">Yes 💖</button>
+        <button id="maybe">Maybe Not 😜</button>
     </div>
 </div>
 
-<script>
-    function nextPage() {
-        document.getElementById("page1").classList.remove("active");
-        document.getElementById("page2").classList.add("active");
-    }
+<!-- PAGE 3 -->
+<div class="page" id="page3">
+    <h1 class="final-title">💖 Happy 3rd Year Valentine Day Jaya 💖</h1>
+    <p class="final-text">
+        Three beautiful years, countless memories,  
+        and many more to come 🤗😘❤️  
+        <br><br>
+        Thank you for choosing me — always.
+    </p>
+</div>
 
-    // Floating hearts
-    function createHeart() {
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.innerHTML = "❤️";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.fontSize = Math.random() * 30 + 15 + "px";
-        heart.style.animationDuration = Math.random() * 3 + 4 + "s";
-        document.body.appendChild(heart);
+<script>
+const page1 = document.getElementById("page1");
+const page2 = document.getElementById("page2");
+const page3 = document.getElementById("page3");
+
+function nextPage() {
+    page1.classList.remove("active");
+    page2.classList.add("active");
+}
+
+function yesClicked() {
+    page2.classList.remove("active");
+    page3.classList.add("active");
+    launchConfetti();
+    heartBurst();
+    hugKissBurst();
+}
+
+// Floating hearts background
+setInterval(() => {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerHTML = "❤️";
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.fontSize = Math.random() * 25 + 15 + "px";
+    h.style.animationDuration = Math.random() * 3 + 4 + "s";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 7000);
+}, 300);
+
+// Harder Maybe Not button 😈
+const maybe = document.getElementById("maybe");
+maybe.addEventListener("mouseover", () => {
+    const x = Math.random() * 400 - 200;
+    const y = Math.random() * 250 - 125;
+    maybe.style.transform = `translate(${x}px, ${y}px)`;
+});
+
+// Confetti
+function launchConfetti() {
+    for (let i = 0; i < 60; i++) {
+        const c = document.createElement("div");
+        c.className = "confetti";
+        c.style.left = Math.random() * 100 + "vw";
+        c.style.background = `hsl(${Math.random()*360},100%,70%)`;
+        c.style.animationDuration = Math.random() * 2 + 1 + "s";
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 2000);
+    }
+}
+
+// Heart burst
+function heartBurst() {
+    for (let i = 0; i < 30; i++) {
+        const h = document.createElement("div");
+        h.innerHTML = "❤️";
+        h.style.position = "absolute";
+        h.style.left = "50%";
+        h.style.top = "50%";
+        h.style.fontSize = "24px";
+        h.style.transform =
+            `translate(${Math.random()*300-150}px, ${Math.random()*300-150}px)`;
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 1500);
+    }
+}
+
+// Hug & Kiss burst 🤗 😘
+function hugKissBurst() {
+    const emojis = ["🤗", "😘"];
+    for (let i = 0; i < 25; i++) {
+        const e = document.createElement("div");
+        e.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+        e.style.position = "absolute";
+        e.style.left = "50%";
+        e.style.top = "55%";
+        e.style.fontSize = "28px";
+        e.style.transition = "all 1.5s ease-out";
+        document.body.appendChild(e);
 
         setTimeout(() => {
-            heart.remove();
-        }, 7000);
+            e.style.transform =
+                `translate(${Math.random()*300-150}px, ${Math.random()*300-150}px) scale(1.5)`;
+            e.style.opacity = "0";
+        }, 50);
+
+        setTimeout(() => e.remove(), 1600);
     }
-
-    setInterval(createHeart, 300);
-
-    // Move "Maybe Not" button
-    const maybeBtn = document.getElementById("maybe");
-    maybeBtn.addEventListener("mouseover", () => {
-        const x = Math.random() * 200 - 100;
-        const y = Math.random() * 200 - 100;
-        maybeBtn.style.transform = `translate(${x}px, ${y}px)`;
-    });
+}
 </script>
 
 </body>
